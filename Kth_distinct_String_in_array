@@ -1,0 +1,57 @@
+/*A distinct string is a string that is present only once in an array.
+Given an array of strings arr, and an integer k, return the kth distinct string present in arr. If there are fewer than k distinct strings, return an empty string "".
+Note that the strings are considered in the order in which they appear in the array.
+
+Detailed Explanation with example:
+Input: arr = ["d", "b", "c", "b", "c", "a"], k = 2
+Output: "a"
+Explanation:
+The only distinct strings in arr are "d" and "a".
+"d" appears 1st, so it is the 1st distinct string.
+"a" appears 2nd, so it is the 2nd distinct string.
+Since k == 2, "a" is returned. 
+
+constraints
+1 <= k <= arr.length <= 1000
+1 <= arr[i].length <= 5
+arr[i] consists of lowercase English letters. */
+
+
+//code
+
+class Solution {
+public:
+    string kthDistinct(vector<string>& arr, int k) {
+        int n = arr.size();
+
+        vector<string> distinctStrings;
+
+        /* iterating through each string in an array. */
+        for (int i = 0; i < n; i++) {
+            string currentString = arr[i];
+            bool isDistinct = true;
+
+          /* to check if the current string is distinct or not.*/
+            for (int j = 0; j < n; j++) {
+                if (j == i) continue;  /* stop comparison if the string is comparing itself.*/
+            /*if the string matches the other string then mention isDistinct is false and break the loop.*/
+                if (arr[j] == currentString) {   
+                    isDistinct = false;
+                    break;
+                }
+            }
+
+            
+            if (isDistinct) {
+                distinctStrings.push_back(currentString);
+            }
+        }
+
+        
+        if (distinctStrings.size() < k) {
+            return "";
+        }
+
+        return distinctStrings[k - 1];
+    }
+};
